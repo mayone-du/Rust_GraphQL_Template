@@ -3,7 +3,7 @@ use juniper::RootNode;
 
 use juniper::{GraphQLInputObject, GraphQLObject};
 
-// 構造体の定義
+// GraphQLの構造体の定義
 #[derive(GraphQLObject)]
 #[graphql(description = "Hello struct")]
 struct Hello {
@@ -11,7 +11,15 @@ struct Hello {
   message: String,
 }
 
-// 引数で受け取る構造体の定義
+#[derive(GraphQLObject)]
+#[graphql(description = "Hoge struct")]
+struct Hoge {
+  id: String,
+  message: String,
+  foo: String,
+}
+
+// GraphQLクエリの引数で受け取る構造体の定義
 #[derive(GraphQLInputObject)]
 #[graphql(description = "NewHello struct")]
 struct NewHello {
@@ -23,12 +31,20 @@ pub struct QueryRoot;
 
 #[juniper::object]
 impl QueryRoot {
-  // humanというqueryの名前で実行できる
+  // humanというqueryの名前で実行できる 引数にString型のidを受け取り、Hello構造体を返す？
   fn human(id: String) -> FieldResult<Hello> {
     // ただの静的なメッセージを返す
     Ok(Hello {
       id: "0".to_owned(),
       message: "Hello GraphQL!".to_owned(),
+    })
+  }
+
+  fn hoge(id: String) -> FieldResult<Hoge> {
+    Ok(Hoge {
+      id: id.to_owned(),
+      message: "Hoge String".to_owned(),
+      foo: String::from("foooooo"),
     })
   }
 }

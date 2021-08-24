@@ -36,7 +36,7 @@ async fn graphql(
 
 #[actix_web::main]
 async fn main() -> io::Result<()> {
-    // Create Juniper schema
+    // juniperのschemaを作成
     let schema = std::sync::Arc::new(create_schema());
 
     // httpサーバーを起動
@@ -44,8 +44,7 @@ async fn main() -> io::Result<()> {
         App::new()
             .data(schema.clone())
             .wrap(
-                // Corsの設定
-                Cors::new()
+                Cors::new() // CORSの設定
                     .allowed_methods(vec!["POST", "GET"]) // 許可するメソッド
                     .supports_credentials()
                     .max_age(3600)
