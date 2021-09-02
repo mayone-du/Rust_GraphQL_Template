@@ -7,9 +7,9 @@ use juniper::http::graphiql::graphiql_source;
 use juniper::http::GraphQLRequest;
 
 // 同階層のschemaをimport
-mod schema;
+mod graphql;
 
-use crate::schema::{create_schema, Schema};
+use crate::graphql::{create_schema, Schema};
 
 // PlayGround用のGraphiQLを定義
 async fn graphiql() -> HttpResponse {
@@ -34,6 +34,7 @@ async fn graphql(
         .body(user))
 }
 
+// main関数
 #[actix_web::main]
 async fn main() -> io::Result<()> {
     // juniperのschemaを作成
